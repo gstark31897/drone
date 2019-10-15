@@ -1,0 +1,22 @@
+version: '3'
+services:
+  server:
+    image: drone/drone
+    environment:
+     - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
+     - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
+     - DRONE_SERVER_HOST=drone_server
+     - DRONE_SERVER_PROTO=http
+     - DRONE_RPC_SECRET=doesntreallymatter
+    expose:
+     - 80
+
+  agent:
+    image: drone/agent
+    environment:
+     - DRONE_RPC_PROTO=http
+     - DRONE_RPC_HOST=server
+     - DRONE_RPC_SECRET=doesntreallymatter
+     - DRONE_RUNNER_NAME=agent
+    volumes:
+     - /var/run/docker.sock:/var/run/docker.sock
