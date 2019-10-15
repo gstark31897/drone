@@ -1,6 +1,6 @@
 version: '3'
 services:
-  server:
+  drone_server:
     image: drone/drone
     environment:
      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
@@ -11,11 +11,11 @@ services:
     expose:
      - 80
 
-  agent:
+  drone_agent:
     image: drone/agent
     environment:
      - DRONE_RPC_PROTO=http
-     - DRONE_RPC_HOST=server
+     - DRONE_RPC_HOST=drone_server
      - DRONE_RPC_SECRET=doesntreallymatter
      - DRONE_RUNNER_NAME=agent
     volumes:
