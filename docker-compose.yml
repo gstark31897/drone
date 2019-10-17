@@ -3,9 +3,11 @@ services:
   drone_server:
     image: drone/drone
     environment:
+     - DRONE_USER_CREATE=username:gstark31897,admin:true
+     - DRONE_USER_FILTER=gstark31897
      - DRONE_GITHUB_CLIENT_ID=${DRONE_GITHUB_CLIENT_ID}
      - DRONE_GITHUB_CLIENT_SECRET=${DRONE_GITHUB_CLIENT_SECRET}
-     - DRONE_SERVER_HOST=drone_server
+     - DRONE_SERVER_HOST=drone.gstark.net
      - DRONE_SERVER_PROTO=http
      - DRONE_RPC_SECRET=doesntreallymatter
     expose:
@@ -18,5 +20,7 @@ services:
      - DRONE_RPC_HOST=drone_server
      - DRONE_RPC_SECRET=doesntreallymatter
      - DRONE_RUNNER_NAME=agent
+     - DRONE_RUNNER_PRIVILEGED_IMAGES=true
+     - DRONE_RUNNER_VOLUMES=/var/run/docker.sock:/var/run/docker.sock
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
